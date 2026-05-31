@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Login Portal</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-1: #020617;
+        --bg-2: #0f172a;
+        --panel: rgba(15, 23, 42, 0.9);
+        --panel-border: rgba(148, 163, 184, 0.18);
+        --text-main: #f8fafc;
+        --text-soft: #94a3b8;
+        --text-strong: #dbeafe;
+        --accent: #38bdf8;
+        --accent-2: #2563eb;
+        --warning: #f59e0b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-main);
+        background:
+          radial-gradient(circle at top, rgba(37, 99, 235, 0.2), transparent 28%),
+          linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      }
+
+      .portal-shell {
+        width: 100%;
+        max-width: 1040px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+        align-items: stretch;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 22px;
+        box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(10px);
+      }
+
+      .intro {
+        padding: 28px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        margin-bottom: 18px;
+        color: #bae6fd;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .intro p {
+        margin: 0;
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 16px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .info-card {
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(2, 6, 23, 0.55);
+        border: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      .info-card strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-strong);
+        font-size: 14px;
+      }
+
+      .info-card span {
+        color: var(--text-soft);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .login-card {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .login-title {
+        margin: 0 0 10px;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .login-subtitle {
+        margin: 0 0 22px;
+        color: var(--text-soft);
+        line-height: 1.7;
+      }
+
+      .alert-banner {
+        margin-bottom: 18px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: rgba(245, 158, 11, 0.08);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        color: #fde68a;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #cbd5e1;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        margin-bottom: 18px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        background: rgba(2, 6, 23, 0.68);
+        color: var(--text-main);
+        font-size: 15px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: rgba(56, 189, 248, 0.6);
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+      }
+
+      button {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        color: white;
+        background: linear-gradient(135deg, var(--accent-2), var(--accent));
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28);
+      }
+
+      .footer-note {
+        margin-top: 16px;
+        text-align: center;
+        color: #64748b;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="portal-shell">
+      <section class="panel intro">
+        <span class="eyebrow">INTERNAL ACCESS</span>
+        <h1>Employee Login Portal</h1>
+        <p>
+          Sign in to access internal resources, HR systems, support dashboards,
+          and internal tooling. This prototype simulates a corporate login
+          surface for web reconnaissance and client-side review exercises.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>Audit Clue</strong>
+            <span>
+              Review browser-side artifacts carefully during web assessments,
+              including rendered pages and exposed static resources.
+            </span>
+          </div>
+          <div class="info-card">
+            <strong>Notice</strong>
+            <span>
+              Backup maintenance pages are not intended for public indexing
+              during production deployment.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel login-card">
+        <h2 class="login-title">Sign In</h2>
+        <p class="login-subtitle">
+          Enter your company credentials to continue.
+        </p>
+
+        <div class="alert-banner">
+          Security teams are advised to review exposed client-side content and
+          deployment artifacts during audits.
+        </div>
+
+        <form>
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="j.smith" />
+
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+          />
+
+          <button type="button">Login</button>
+        </form>
+
+        <div class="footer-note">Authorized employees only.</div>
+      </section>
+    </div>
+
+    <!-- TODO: review indexing rules before production -->
+  </body>
+</html>

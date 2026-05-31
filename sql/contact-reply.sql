@@ -1,0 +1,41 @@
+USE cybersecurity_platform;
+GO
+
+IF OBJECT_ID(N'dbo.CONTACT_MESSAGE', N'U') IS NOT NULL
+BEGIN
+    IF COL_LENGTH(N'dbo.CONTACT_MESSAGE', N'admin_reply') IS NULL
+    BEGIN
+        ALTER TABLE dbo.CONTACT_MESSAGE
+        ADD admin_reply NVARCHAR(MAX) NULL;
+    END;
+
+    IF COL_LENGTH(N'dbo.CONTACT_MESSAGE', N'replied_at') IS NULL
+    BEGIN
+        ALTER TABLE dbo.CONTACT_MESSAGE
+        ADD replied_at DATETIME NULL;
+    END;
+
+    IF COL_LENGTH(N'dbo.CONTACT_MESSAGE', N'replied_by') IS NULL
+    BEGIN
+        ALTER TABLE dbo.CONTACT_MESSAGE
+        ADD replied_by INT NULL;
+    END;
+END;
+GO
+
+IF OBJECT_ID(N'dbo.CONTACT_MESSAGE', N'U') IS NOT NULL
+   AND OBJECT_ID(N'dbo.[USER]', N'U') IS NOT NULL
+   AND COL_LENGTH(N'dbo.CONTACT_MESSAGE', N'replied_by') IS NOT NULL
+   AND NOT EXISTS (
+       SELECT 1
+       FROM sys.foreign_keys
+       WHERE name = N'FK_CONTACT_MESSAGE_REPLIED_BY_USER'
+         AND parent_object_id = OBJECT_ID(N'dbo.CONTACT_MESSAGE')
+   )
+BEGIN
+    ALTER TABLE dbo.CONTACT_MESSAGE WITH CHECK
+    ADD CONSTRAINT FK_CONTACT_MESSAGE_REPLIED_BY_USER
+        FOREIGN KEY (replied_by)
+        REFERENCES dbo.[USER](user_id);
+END;
+GO

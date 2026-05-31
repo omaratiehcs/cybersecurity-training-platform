@@ -1,0 +1,244 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
+import { authFetch } from "../utils/authFetch";
+
+function SocCasesPage() {
+  const navigate = useNavigate();
+  const [cases, setCases] = useState([]);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const fetchCases = async () => {
+      try {
+        const response = await authFetch(
+          "http://localhost:5000/api/soc-cases",
+          {},
+          navigate
+        );
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setMessage(data.error || "Failed to fetch SOC cases");
+          return;
+        }
+
+        setCases(data.data);
+      } catch (error) {
+        console.error(error);
+        setMessage("Server error");
+      }
+    };
+
+    fetchCases();
+  }, [navigate]);
+
+  const getDifficultyColor = (difficulty) => {
+    if (difficulty === "Easy") return "#16a34a";
+    if (difficulty === "Medium") return "#f59e0b";
+    if (difficulty === "Hard") return "#dc2626";
+    return "#6b7280";
+  };
+
+  const getDescriptionPreview = (text) => {
+    if (!text) {
+      return "No summary available.";
+    }
+
+    const normalized = text.replace(/\s+/g, " ").trim();
+
+    if (normalized.length <= 140) {
+      return normalized;
+    }
+
+    return `${normalized.slice(0, 140).trimEnd()}...`;
+  };
+
+  return (
+    <Layout>
+      <div style={styles.page}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>SOC Cases</h1>
+          <p style={styles.subtitle}>
+            Analyze security alerts, review SIEM-style logs, and submit your
+            findings.
+          </p>
+        </div>
+
+        {message && <p style={styles.message}>{message}</p>}
+
+        {cases.length === 0 ? (
+          <p style={styles.empty}>No SOC cases available.</p>
+        ) : (
+          <div style={styles.grid}>
+            {cases.map((socCase) => (
+              <div key={socCase.soc_case_id} style={styles.card}>
+                <div style={styles.cardContent}>
+                  <div style={styles.topRow}>
+                    <h3 style={styles.cardTitle}>{socCase.title}</h3>
+                    <span
+                      style={{
+                        ...styles.difficultyBadge,
+                        backgroundColor: getDifficultyColor(socCase.difficulty),
+                      }}
+                    >
+                      {socCase.difficulty || "Unrated"}
+                    </span>
+                  </div>
+
+                  <p style={styles.description}>
+                    {getDescriptionPreview(socCase.case_summary)}
+                  </p>
+                </div>
+
+                <div style={styles.cardFooter}>
+                  <div style={styles.infoRow}>
+                    <span style={styles.points}>{socCase.points} pts</span>
+                    <span
+                      style={{
+                        ...styles.status,
+                        color: socCase.solved ? "#4ade80" : "#f87171",
+                      }}
+                    >
+                      {socCase.solved ? "Solved" : "Not Solved"}
+                    </span>
+                  </div>
+
+                  <Link
+                    to={`/soc-cases/${socCase.soc_case_id}`}
+                    style={styles.button}
+                  >
+                    Open Case
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Layout>
+  );
+}
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    margin: "-20px",
+    padding: "36px 20px 24px",
+    paddingTop: "96px",
+    background:
+      "linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%)",
+  },
+  header: {
+    marginBottom: "36px",
+  },
+  title: {
+    margin: 0,
+    marginBottom: "10px",
+    fontSize: "56px",
+    lineHeight: "1.1",
+    color: "#ffffff",
+  },
+  subtitle: {
+    margin: 0,
+    color: "#94a3b8",
+    fontSize: "18px",
+  },
+  message: {
+    color: "#dc2626",
+    marginBottom: "16px",
+  },
+  empty: {
+    color: "#94a3b8",
+    fontSize: "16px",
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    columnGap: "24px",
+    rowGap: "40px",
+  },
+  card: {
+    background: "rgba(15, 23, 42, 0.88)",
+    border: "1px solid rgba(148, 163, 184, 0.16)",
+    borderRadius: "18px",
+    padding: "20px",
+    boxShadow: "0 14px 35px rgba(0,0,0,0.2)",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: "16px",
+    minHeight: "220px",
+  },
+  cardContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+  },
+  topRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: "12px",
+  },
+  cardTitle: {
+    margin: 0,
+    fontSize: "22px",
+    lineHeight: "1.3",
+    color: "#f8fafc",
+    fontWeight: "700",
+  },
+  difficultyBadge: {
+    color: "#fff",
+    padding: "7px 11px",
+    borderRadius: "999px",
+    fontSize: "13px",
+    fontWeight: "700",
+    whiteSpace: "nowrap",
+  },
+  description: {
+    color: "#94a3b8",
+    lineHeight: "1.6",
+    fontSize: "14px",
+    margin: 0,
+    display: "-webkit-box",
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+  },
+  cardFooter: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "14px",
+  },
+  infoRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    fontSize: "14px",
+    fontWeight: "600",
+    marginTop: "auto",
+  },
+  points: {
+    color: "#93c5fd",
+  },
+  status: {
+    fontWeight: "700",
+  },
+  button: {
+    display: "inline-block",
+    textAlign: "center",
+    textDecoration: "none",
+    background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+    color: "#fff",
+    padding: "12px 14px",
+    borderRadius: "10px",
+    fontWeight: "700",
+    marginTop: "auto",
+  },
+};
+
+export default SocCasesPage;
