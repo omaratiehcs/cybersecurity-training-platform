@@ -1,76 +1,94 @@
 # Cybersecurity Training Platform
 
-A full-stack cybersecurity training platform designed to help users develop practical cybersecurity skills through hands-on exercises and realistic simulations.
+A full-stack cybersecurity training platform built as my senior graduation project for the **Bachelor of Science in Computer Science at Lebanese International University (LIU)**.
 
-The platform combines **Capture The Flag (CTF) challenges**, **SOC case simulations**, **Incident Response scenarios**, **Docker-based labs**, and structured learning resources into a single web application where users can learn, practice, and track their progress.
+The platform combines hands-on **CTF challenges, SOC case simulations, Incident Response scenarios, Docker-based security labs, and structured learning resources** in one application.
 
-This project was developed as my senior graduation project for the Bachelor of Science in Computer Science at the Lebanese International University (LIU).
-
----
-
-# Features
-
-## User Features
-
-- User registration and authentication
-- Secure password hashing using bcrypt
-- JWT-based authentication and authorization
-- Personal dashboard
-- Progress tracking
-- Leaderboard
+The goal of the project was to create a practical environment where learners can practice cybersecurity workflows rather than only study theory.
 
 ---
 
-## Training Modules
+## 🎯 Core Modules
 
-### Capture The Flag (CTF)
+### CTF Challenges
 
-- Solve practical cybersecurity challenges
+- Practical cybersecurity challenges
 - Flag submission and validation
-- Challenge timer
+- Challenge timer and lockout handling
 - Progress tracking
 
 ### SOC Case Simulations
 
-- Analyze realistic security incidents
-- Submit investigation results
-- Practice Security Operations Center workflows
+- Investigate simulated security incidents
+- Submit analysis and investigation results
+- Practice SOC-style workflows
 
 ### Incident Response Scenarios
 
 - Multi-step incident investigations
-- Guided response workflow
-- Step-by-step submissions
+- Ordered response workflow
+- Step-by-step submissions and progression
 
 ### Learning Center
 
 - Structured cybersecurity learning paths
-- Educational resources
-- Course progression
+- Course and lesson progression
+- Learning content management
 
 ### Docker Labs
 
-- Hands-on cybersecurity labs
-- Practical environments for learning
+- Isolated hands-on security labs
+- Practical web-security exercises
+- Example **Hidden Comment Lab**
 
 ---
 
-## Administration
+## 👤 Platform Features
 
-Administrative dashboard allowing administrators to:
+- User registration and authentication
+- Email verification
+- Secure password hashing with bcrypt
+- JWT-based authentication
+- Role-Based Access Control (RBAC)
+- User progress tracking
+- Leaderboard
+- Contact and platform review functionality
+- Cybersecurity assistant/chat functionality
+
+### Admin Features
 
 - Manage CTF challenges
 - Manage SOC cases
 - Manage Incident Response scenarios
 - Manage Learning Center content
-- View platform insights
 - Review user submissions
+- View administrative insights
 
 ---
 
-# Technology Stack
+## 🔐 Security-Focused Implementation
 
-## Frontend
+Security was considered as part of the application design, not only as a feature of the training content.
+
+The project includes:
+
+- **bcrypt** password hashing
+- **JWT** authentication
+- **Role-Based Access Control** for protected administrative functionality
+- **Email verification** using time-limited verification tokens
+- **Rate limiting** middleware
+- Input normalization and validation
+- Suspicious/malformed input warnings
+- Failed-login attempt tracking and security logging
+- Protected API routes and admin authorization
+
+These features gave me practical experience applying security concepts while developing a real application.
+
+---
+
+## 🧰 Technology Stack
+
+### Frontend
 
 - React.js
 - Vite
@@ -78,43 +96,75 @@ Administrative dashboard allowing administrators to:
 - HTML5
 - CSS3
 
-## Backend
+### Backend
 
 - Node.js
 - Express.js
+- REST APIs
 
-## Database
+### Database
 
 - Microsoft SQL Server
+- SQL Server Management Studio (SSMS)
 
-## Authentication & Security
+### Security
 
 - JSON Web Tokens (JWT)
 - bcrypt
 - Role-Based Access Control (RBAC)
+- Rate limiting
+- Input validation
+- Email verification
 
-## DevOps
+### DevOps / Tools
 
 - Docker
-
-## Development Tools
-
 - Git
 - GitHub
 - Visual Studio Code
-- SQL Server Management Studio (SSMS)
 
 ---
 
-# Project Structure
+## 🏗️ Architecture
 
+```text
+                    React / Vite Frontend
+                              │
+                              ▼
+                    Express.js REST API
+                              │
+              ┌───────────────┴───────────────┐
+              │                               │
+              ▼                               ▼
+       Authentication &                 Cybersecurity
+       Authorization                    Training Modules
+              │                               │
+              └───────────────┬───────────────┘
+                              ▼
+                     Microsoft SQL Server
+                              │
+                              ▼
+                 Progress / Submissions /
+                 Challenges / Cases / Users
 ```
-cybersecurity-training-platform
+
+---
+
+## 📁 Project Structure
+
+```text
+cybersecurity-training-platform/
 │
-├── frontend/                 # React frontend
-├── src/                      # Express backend
-├── sql/                      # Database scripts
-├── docker-labs/              # Docker-based cybersecurity labs
+├── frontend/                 # React + Vite frontend
+├── src/
+│   ├── config/               # Database configuration
+│   ├── controllers/          # Application/business logic
+│   ├── middleware/           # Authentication, authorization, rate limiting
+│   ├── routes/               # REST API routes
+│   └── utils/                # Validation, security, email utilities
+│
+├── sql/                      # Database and feature SQL scripts
+├── docker-labs/              # Docker-based security labs
 ├── package.json
 ├── package-lock.json
 └── README.md
@@ -122,153 +172,79 @@ cybersecurity-training-platform
 
 ---
 
-# System Architecture
+## 🚀 Running the Project Locally
 
-```
-                 React Frontend
-                        │
-                        ▼
-               Express.js REST API
-                        │
-                        ▼
-             Microsoft SQL Server
-                        │
-                        ▼
-        Cybersecurity Training Modules
-
-     • CTF Challenges
-     • SOC Case Simulations
-     • Incident Response
-     • Learning Center
-     • Docker Labs
-```
-
----
-
-# Installation
-
-## Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/omaratiehcs/cybersecurity-training-platform.git
-```
-
-## Navigate to the project
-
-```bash
 cd cybersecurity-training-platform
 ```
 
----
-
-## Backend
-
-Install dependencies:
+### 2. Backend setup
 
 ```bash
 npm install
-```
-
-Start the backend server:
-
-```bash
 npm start
 ```
 
----
+The backend uses environment variables for configuration, including database and authentication settings.
 
-## Frontend
-
-Navigate to the frontend folder:
+### 3. Frontend setup
 
 ```bash
 cd frontend
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
----
+### 4. Database
 
-# Database
+Create a Microsoft SQL Server database and execute the required SQL scripts from the `sql/` directory.
 
-Create a Microsoft SQL Server database and execute the SQL scripts located in the `sql` directory.
-
-The project includes scripts for:
-
-- Learning Center
-- Challenge Timer
-- Contact Messages
-- Contact Replies
-- Platform Reviews
+> **Note:** This repository does not include production secrets. Configure environment variables locally before running the application.
 
 ---
 
-# Docker Labs
+## 📚 What I Learned
 
-The project includes Docker-based cybersecurity labs designed to provide practical learning experiences.
+This project gave me practical experience with:
 
-Example included:
-
-- Hidden Comment Lab
-
----
-
-# Skills Demonstrated
-
-This project demonstrates practical experience with:
-
-- Full-stack web development
-- REST API development
-- React.js frontend development
-- Express.js backend development
-- Microsoft SQL Server database design
-- JWT authentication
-- Password hashing with bcrypt
-- Role-Based Access Control (RBAC)
-- Docker containerization
-- Cybersecurity training platform design
-- Secure application development
-- Database integration
-- CRUD operations
-- Git version control
+- Designing and building a full-stack application
+- Developing REST APIs with Express.js
+- Working with Microsoft SQL Server
+- Implementing authentication and authorization
+- Applying password hashing and security controls
+- Building cybersecurity training workflows
+- Containerizing security labs with Docker
+- Designing multi-step Incident Response scenarios
+- Working with Git and GitHub throughout development
 
 ---
 
-# Future Improvements
+## 🔮 Future Improvements
 
-Potential future enhancements include:
+Planned or potential improvements include:
 
 - Multi-factor authentication (MFA)
-- Email verification
 - Password reset functionality
-- User achievements and badges
-- Additional Docker labs
-- Expanded Learning Center
-- More CTF challenges
-- Additional SOC case scenarios
-- API documentation
+- More Docker-based labs
+- Additional CTF challenges and SOC cases
 - Automated testing
+- API documentation
 - CI/CD pipeline
 - Cloud deployment
 
 ---
 
-# Screenshots
+## 📌 Project Status
 
-Screenshots of the platform will be added soon.
+This project was developed as a university graduation project and is now being maintained as part of my cybersecurity portfolio.
+
+I plan to continue extending it with additional security labs and practical cybersecurity features as I progress through my learning roadmap.
 
 ---
 
-# License
+## 📄 License
 
 This project is provided for educational and portfolio purposes.
