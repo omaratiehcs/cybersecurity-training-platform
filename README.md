@@ -150,6 +150,84 @@ These features gave me practical experience applying security concepts while dev
 
 ---
 
+## 📸 Platform Screenshots
+
+The screenshots below show the main user workflows, cybersecurity training modules, administrative features, and the integrated Docker lab environment.
+
+### Platform Overview
+
+![Platform landing page](docs/screenshots/landing-page.png)
+
+The landing page introduces the platform as a hands-on cybersecurity training environment combining investigation, CTF, and incident-response workflows.
+
+### User Dashboard
+
+![User dashboard](docs/screenshots/dashboard.png)
+
+The dashboard brings together CTF challenges, SOC cases, and Incident Response training with progress tracking.
+
+### CTF Challenges
+
+![CTF challenges](docs/screenshots/ctf-challenges.png)
+
+The CTF module provides practical security challenges with difficulty levels, point values, and solve status.
+
+### CTF Challenge Details
+
+![CTF challenge details](docs/screenshots/ctf-challenge-details.png)
+
+Individual challenges provide investigation instructions and support hands-on lab execution and flag submission.
+
+### SOC Case Analysis
+
+![SOC cases](docs/screenshots/soc-cases.png)
+
+The SOC module presents simulated security alerts and investigation cases for analyst-style practice.
+
+### SIEM-Style Log Investigation
+
+![SIEM log viewer](docs/screenshots/image.png)
+
+A log-viewing interface presents Windows security audit events and other investigation artifacts for analysis.
+
+### Incident Response
+
+![Incident Response scenarios](docs/screenshots/incident-response.png)
+
+Incident Response scenarios guide users through step-based investigations and response workflows.
+
+### Learning Center
+
+![Learning Center](docs/screenshots/learning%20center.png)
+
+The Learning Center organizes foundational cybersecurity material into structured learning paths and lessons.
+
+### Administration
+
+![Admin dashboard](docs/screenshots/admin-dashboard.png)
+
+The administrative dashboard provides management areas for challenges, SOC cases, Incident Response, learning content, and platform operations.
+
+### Administrative Insights
+
+![Admin insights](docs/screenshots/admin-insights.png)
+
+Administrative analytics provide visibility into training activity and performance across the platform's core modules.
+
+### Docker Lab Integration
+
+![Docker lab integration](docs/screenshots/docker-intergration.png)
+
+The platform can start and manage an isolated Docker-based lab directly from a challenge workflow.
+
+### Docker Security Lab
+
+![Docker security lab](docs/screenshots/docker-lab.png)
+
+The Hidden Comment Lab runs as an isolated web-security training environment, giving learners a practical reconnaissance and source-inspection exercise.
+
+---
+
 ## 📁 Project Structure
 
 ```text
@@ -165,6 +243,7 @@ cybersecurity-training-platform/
 │
 ├── sql/                      # Database and feature SQL scripts
 ├── docker-labs/              # Docker-based security labs
+├── docs/screenshots/         # Portfolio screenshots
 ├── package.json
 ├── package-lock.json
 └── README.md
